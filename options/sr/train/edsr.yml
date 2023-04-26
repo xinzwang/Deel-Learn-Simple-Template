@@ -1,0 +1,87 @@
+  #### general settings
+  name: SR_DIV2K_bic_EDSR
+  use_tb_logger: false
+  model: SRModel
+  scale: 4
+  gpu_ids: [0]
+  metrics: [psnr, ssim, lpips]
+
+  #### datasets
+  datasets:
+    train:
+      name: DIV2K_bic
+      mode: PairedDataset
+      data_type: lmdb
+      color: RGB
+
+      dataroot_src: ../../datasets/SRDatasets/DIV2K_train/BicLR/x4.lmdb
+      dataroot_tgt: ../../datasets/SRDatasets/DIV2K_train/HR.lmdb
+
+      use_shuffle: true
+      workers_per_gpu: 8  # per GPU
+      imgs_per_gpu: 32
+      tgt_size: 128
+      src_size: 32
+      use_flip: true
+      use_rot: true
+
+    val:
+      name: DIV2K_bic_mini
+      mode: PairedDataset
+      data_type: lmdb
+      color: RGB
+
+      dataroot_src: ../../datasets/SRDatasets/DIV2K_valid/BicLR/x4_mini.lmdb
+      dataroot_tgt: ../../datasets/SRDatasets/DIV2K_valid/HR_mini.lmdb
+
+  #### network structures
+  networks:
+    netSR:
+      which_network: EDSR
+      setting:
+        nf: 64
+        nb: 16
+        res_scale: 1
+        upscale: 4
+      pretrain: 
+        path: ~
+        strict_load: 
+
+  #### training settings: learning rate scheme, loss
+  train:
+    resume_state: ~
+    D_ratio: 1
+    max_grad_norm: 50
+    buffer_size: 0
+
+    optim_sr: true
+    optim_deg: true
+
+    losses:
+      sr_pix: 
+        type: L1Loss
+        weight: 1.0
+
+    optimizers:
+      default:
+        type: Adam
+        lr: !!float 2e-4
+
+      netSR: ~
+
+    niter: 200000
+    warmup_iter: -1  # no warm up
+
+    schedulers:
+      default:
+        type: MultiStepRestartLR
+        milestones: [50000, 100000, 150000]
+        gamma: 0.5
+    
+    manual_seed: 0
+    val_freq: !!float 5e3
+
+  #### logger
+  logger:
+    print_freq: 100
+    save_checkpoint_freq: !!float 5e3
