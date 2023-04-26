@@ -1,0 +1,318 @@
+23-04-27 01:29:50.004 - INFO:   name: SR_DIV2K_bic_EDSR
+  use_tb_logger: False
+  model: SRModel
+  scale: 4
+  gpu_ids: [0]
+  metrics: ['psnr', 'ssim', 'lpips']
+  datasets:[
+    test:[
+      name: DIV2K_bic_mini
+      mode: PairedDataset
+      data_type: lmdb
+      color: RGB
+      dataroot_src: ../../datasets/SRDatasets/DIV2K_valid/BicLR/x4.lmdb
+      dataroot_tgt: ../../datasets/SRDatasets/DIV2K_valid/HR.lmdb
+      phase: test
+      scale: 4
+    ]
+  ]
+  networks:[
+    netSR:[
+      which_network: EDSR
+      setting:[
+        nf: 64
+        nb: 16
+        res_scale: 1
+        upscale: 4
+      ]
+      pretrain:[
+        path: experiments/sr/SR_DIV2K_bic_EDSR/models/200000_netSR.pth
+        strict_load: True
+      ]
+    ]
+  ]
+  train:[
+    resume_state: True
+    D_ratio: 1
+    max_grad_norm: 50
+    buffer_size: 0
+    optim_sr: True
+    optim_deg: True
+    losses:[
+      sr_pix:[
+        type: L1Loss
+        weight: 1.0
+      ]
+    ]
+    optimizers:[
+      default:[
+        type: Adam
+        lr: 0.0002
+      ]
+      netSR: None
+    ]
+    niter: 200000
+    warmup_iter: -1
+    schedulers:[
+      default:[
+        type: MultiStepRestartLR
+        milestones: [50000, 100000, 150000]
+        gamma: 0.5
+      ]
+    ]
+    manual_seed: 0
+    val_freq: 5000.0
+  ]
+  logger:[
+    print_freq: 100
+    save_checkpoint_freq: 5000.0
+  ]
+  is_train: False
+  path:[
+    root: /home/mark/Codes/dual-cam/Passive-Camera/deel-learn-simple-template
+    results_root: /home/mark/Codes/dual-cam/Passive-Camera/deel-learn-simple-template/results/sr/SR_DIV2K_bic_EDSR
+    log: /home/mark/Codes/dual-cam/Passive-Camera/deel-learn-simple-template/results/sr/SR_DIV2K_bic_EDSR/log
+  ]
+  dist: False
+
+23-04-27 01:29:50.004 - INFO: Dataset [PairedDataset - DIV2K_bic_mini] is created.
+23-04-27 01:29:50.005 - INFO: Number of test images in [DIV2K_bic_mini]: 100
+23-04-27 01:29:50.022 - INFO: Network G structure: DataParallel - EDSR, with parameters: 1,517,595
+23-04-27 01:29:50.022 - INFO: EDSR(
+  (sub_mean): MeanShift(3, 3, kernel_size=(1, 1), stride=(1, 1))
+  (add_mean): MeanShift(3, 3, kernel_size=(1, 1), stride=(1, 1))
+  (head): Sequential(
+    (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+  (body): Sequential(
+    (0): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (1): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (2): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (3): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (4): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (5): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (6): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (7): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (8): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (9): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (10): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (11): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (12): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (13): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (14): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (15): ResBlock(
+      (body): Sequential(
+        (0): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): ReLU(inplace=True)
+        (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (16): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+  (tail): Sequential(
+    (0): Upsampler(
+      (0): Conv2d(64, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): PixelShuffle(upscale_factor=2)
+      (2): Conv2d(64, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (3): PixelShuffle(upscale_factor=2)
+    )
+    (1): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+  )
+)
+23-04-27 01:29:50.022 - INFO: Model [SRModel] is created.
+23-04-27 01:29:50.022 - INFO: 
+Testing [DIV2K_bic_mini]...
+23-04-27 01:29:54.659 - INFO: img:0801x4         ; Scores - psnr: 29.380593; ssim: 0.846504; lpips: 0.280020; Y Scores - psnr: 30.645460; ssim: 0.857694; lpips: 0.000000; 
+23-04-27 01:29:56.952 - INFO: img:0802x4         ; Scores - psnr: 35.258215; ssim: 0.900578; lpips: 0.125217; Y Scores - psnr: 37.278704; ssim: 0.919621; lpips: 0.000000; 
+23-04-27 01:30:01.496 - INFO: img:0803x4         ; Scores - psnr: 40.522850; ssim: 0.970159; lpips: 0.074178; Y Scores - psnr: 42.418923; ssim: 0.979203; lpips: 0.000000; 
+23-04-27 01:30:04.927 - INFO: img:0804x4         ; Scores - psnr: 27.398699; ssim: 0.788930; lpips: 0.284566; Y Scores - psnr: 28.885457; ssim: 0.811860; lpips: 0.000000; 
+23-04-27 01:30:07.635 - INFO: img:0805x4         ; Scores - psnr: 28.535477; ssim: 0.772977; lpips: 0.464739; Y Scores - psnr: 29.845311; ssim: 0.797673; lpips: 0.000000; 
+23-04-27 01:30:09.959 - INFO: img:0806x4         ; Scores - psnr: 28.391141; ssim: 0.865177; lpips: 0.208390; Y Scores - psnr: 30.343366; ssim: 0.880918; lpips: 0.000000; 
+23-04-27 01:30:13.144 - INFO: img:0807x4         ; Scores - psnr: 20.177446; ssim: 0.524253; lpips: 0.513637; Y Scores - psnr: 21.657972; ssim: 0.538702; lpips: 0.000000; 
+23-04-27 01:30:15.419 - INFO: img:0808x4         ; Scores - psnr: 26.760524; ssim: 0.798510; lpips: 0.321157; Y Scores - psnr: 28.124619; ssim: 0.820585; lpips: 0.000000; 
+23-04-27 01:30:17.712 - INFO: img:0809x4         ; Scores - psnr: 32.219236; ssim: 0.860982; lpips: 0.251653; Y Scores - psnr: 33.700397; ssim: 0.878052; lpips: 0.000000; 
+23-04-27 01:30:20.361 - INFO: img:0810x4         ; Scores - psnr: 26.686171; ssim: 0.777386; lpips: 0.429584; Y Scores - psnr: 27.901863; ssim: 0.799158; lpips: 0.000000; 
+23-04-27 01:30:22.849 - INFO: img:0811x4         ; Scores - psnr: 29.046906; ssim: 0.784723; lpips: 0.414965; Y Scores - psnr: 30.152086; ssim: 0.806235; lpips: 0.000000; 
+23-04-27 01:30:25.513 - INFO: img:0812x4         ; Scores - psnr: 27.834404; ssim: 0.811890; lpips: 0.279715; Y Scores - psnr: 29.046254; ssim: 0.826870; lpips: 0.000000; 
+23-04-27 01:30:29.814 - INFO: img:0813x4         ; Scores - psnr: 31.372066; ssim: 0.878459; lpips: 0.233804; Y Scores - psnr: 32.769873; ssim: 0.897737; lpips: 0.000000; 
+23-04-27 01:30:32.090 - INFO: img:0814x4         ; Scores - psnr: 28.205668; ssim: 0.896325; lpips: 0.157309; Y Scores - psnr: 29.632111; ssim: 0.907211; lpips: 0.000000; 
+23-04-27 01:30:34.378 - INFO: img:0815x4         ; Scores - psnr: 34.161151; ssim: 0.918582; lpips: 0.215914; Y Scores - psnr: 36.419794; ssim: 0.935044; lpips: 0.000000; 
+23-04-27 01:30:36.690 - INFO: img:0816x4         ; Scores - psnr: 31.667004; ssim: 0.839978; lpips: 0.307992; Y Scores - psnr: 32.969922; ssim: 0.859341; lpips: 0.000000; 
+23-04-27 01:30:39.323 - INFO: img:0817x4         ; Scores - psnr: 32.225815; ssim: 0.884737; lpips: 0.259490; Y Scores - psnr: 33.884831; ssim: 0.901585; lpips: 0.000000; 
+23-04-27 01:30:41.937 - INFO: img:0818x4         ; Scores - psnr: 28.863103; ssim: 0.899167; lpips: 0.191292; Y Scores - psnr: 30.196244; ssim: 0.910180; lpips: 0.000000; 
+23-04-27 01:30:44.213 - INFO: img:0819x4         ; Scores - psnr: 28.048601; ssim: 0.820981; lpips: 0.246235; Y Scores - psnr: 29.655818; ssim: 0.839350; lpips: 0.000000; 
+23-04-27 01:30:46.549 - INFO: img:0820x4         ; Scores - psnr: 24.829419; ssim: 0.803771; lpips: 0.222175; Y Scores - psnr: 26.220770; ssim: 0.818043; lpips: 0.000000; 
+23-04-27 01:30:48.941 - INFO: img:0821x4         ; Scores - psnr: 31.662328; ssim: 0.915989; lpips: 0.067392; Y Scores - psnr: 32.998827; ssim: 0.936771; lpips: 0.000000; 
+23-04-27 01:30:53.472 - INFO: img:0822x4         ; Scores - psnr: 30.652338; ssim: 0.866902; lpips: 0.188203; Y Scores - psnr: 32.088302; ssim: 0.884903; lpips: 0.000000; 
+23-04-27 01:30:57.196 - INFO: img:0823x4         ; Scores - psnr: 26.014098; ssim: 0.817083; lpips: 0.247211; Y Scores - psnr: 27.338797; ssim: 0.833300; lpips: 0.000000; 
+23-04-27 01:30:59.489 - INFO: img:0824x4         ; Scores - psnr: 28.462918; ssim: 0.891892; lpips: 0.201092; Y Scores - psnr: 29.884752; ssim: 0.902453; lpips: 0.000000; 
+23-04-27 01:31:01.794 - INFO: img:0825x4         ; Scores - psnr: 27.311756; ssim: 0.819949; lpips: 0.267161; Y Scores - psnr: 28.703585; ssim: 0.836703; lpips: 0.000000; 
+23-04-27 01:31:04.439 - INFO: img:0826x4         ; Scores - psnr: 24.183800; ssim: 0.758760; lpips: 0.300159; Y Scores - psnr: 25.400510; ssim: 0.774232; lpips: 0.000000; 
+23-04-27 01:31:07.087 - INFO: img:0827x4         ; Scores - psnr: 33.402031; ssim: 0.881892; lpips: 0.333613; Y Scores - psnr: 34.765642; ssim: 0.901385; lpips: 0.000000; 
+23-04-27 01:31:09.375 - INFO: img:0828x4         ; Scores - psnr: 21.640999; ssim: 0.898401; lpips: 0.065162; Y Scores - psnr: 22.784834; ssim: 0.926999; lpips: 0.000000; 
+23-04-27 01:31:11.653 - INFO: img:0829x4         ; Scores - psnr: 26.592980; ssim: 0.532626; lpips: 0.604288; Y Scores - psnr: 27.895609; ssim: 0.578654; lpips: 0.000000; 
+23-04-27 01:31:13.949 - INFO: img:0830x4         ; Scores - psnr: 24.437533; ssim: 0.723231; lpips: 0.361311; Y Scores - psnr: 25.986560; ssim: 0.746850; lpips: 0.000000; 
+23-04-27 01:31:16.243 - INFO: img:0831x4         ; Scores - psnr: 30.165528; ssim: 0.874847; lpips: 0.179622; Y Scores - psnr: 31.525249; ssim: 0.889321; lpips: 0.000000; 
+23-04-27 01:31:18.528 - INFO: img:0832x4         ; Scores - psnr: 30.624978; ssim: 0.880803; lpips: 0.178081; Y Scores - psnr: 32.319673; ssim: 0.899606; lpips: 0.000000; 
+23-04-27 01:31:22.908 - INFO: img:0833x4         ; Scores - psnr: 34.095086; ssim: 0.905720; lpips: 0.330511; Y Scores - psnr: 35.503308; ssim: 0.922602; lpips: 0.000000; 
+23-04-27 01:31:25.203 - INFO: img:0834x4         ; Scores - psnr: 25.391521; ssim: 0.777786; lpips: 0.302192; Y Scores - psnr: 26.833293; ssim: 0.790875; lpips: 0.000000; 
+23-04-27 01:31:29.980 - INFO: img:0835x4         ; Scores - psnr: 22.824816; ssim: 0.592644; lpips: 0.538419; Y Scores - psnr: 24.193140; ssim: 0.612964; lpips: 0.000000; 
+23-04-27 01:31:32.635 - INFO: img:0836x4         ; Scores - psnr: 25.881058; ssim: 0.796875; lpips: 0.210829; Y Scores - psnr: 27.202253; ssim: 0.813936; lpips: 0.000000; 
+23-04-27 01:31:34.974 - INFO: img:0837x4         ; Scores - psnr: 26.225018; ssim: 0.831902; lpips: 0.228135; Y Scores - psnr: 27.582602; ssim: 0.845497; lpips: 0.000000; 
+23-04-27 01:31:37.284 - INFO: img:0838x4         ; Scores - psnr: 37.768986; ssim: 0.906648; lpips: 0.334322; Y Scores - psnr: 39.357394; ssim: 0.927170; lpips: 0.000000; 
+23-04-27 01:31:39.596 - INFO: img:0839x4         ; Scores - psnr: 29.075429; ssim: 0.820934; lpips: 0.327326; Y Scores - psnr: 30.373412; ssim: 0.833787; lpips: 0.000000; 
+23-04-27 01:31:41.887 - INFO: img:0840x4         ; Scores - psnr: 28.381760; ssim: 0.813906; lpips: 0.330555; Y Scores - psnr: 29.752783; ssim: 0.829405; lpips: 0.000000; 
+23-04-27 01:31:44.164 - INFO: img:0841x4         ; Scores - psnr: 28.124429; ssim: 0.858218; lpips: 0.230869; Y Scores - psnr: 29.522803; ssim: 0.873060; lpips: 0.000000; 
+23-04-27 01:31:46.437 - INFO: img:0842x4         ; Scores - psnr: 29.788999; ssim: 0.854698; lpips: 0.239306; Y Scores - psnr: 31.015876; ssim: 0.866373; lpips: 0.000000; 
+23-04-27 01:31:48.652 - INFO: img:0843x4         ; Scores - psnr: 41.161240; ssim: 0.978193; lpips: 0.055402; Y Scores - psnr: 43.253408; ssim: 0.984912; lpips: 0.000000; 
+23-04-27 01:31:52.615 - INFO: img:0844x4         ; Scores - psnr: 44.340803; ssim: 0.985776; lpips: 0.035837; Y Scores - psnr: 46.538157; ssim: 0.990194; lpips: 0.000000; 
+23-04-27 01:31:54.937 - INFO: img:0845x4         ; Scores - psnr: 24.116037; ssim: 0.771517; lpips: 0.327362; Y Scores - psnr: 25.485449; ssim: 0.794454; lpips: 0.000000; 
+23-04-27 01:31:58.674 - INFO: img:0846x4         ; Scores - psnr: 25.140149; ssim: 0.793971; lpips: 0.218636; Y Scores - psnr: 26.465071; ssim: 0.813111; lpips: 0.000000; 
+23-04-27 01:32:01.096 - INFO: img:0847x4         ; Scores - psnr: 27.638675; ssim: 0.825623; lpips: 0.211297; Y Scores - psnr: 29.122313; ssim: 0.847150; lpips: 0.000000; 
+23-04-27 01:32:03.923 - INFO: img:0848x4         ; Scores - psnr: 27.270320; ssim: 0.737763; lpips: 0.362360; Y Scores - psnr: 28.571099; ssim: 0.770804; lpips: 0.000000; 
+23-04-27 01:32:06.347 - INFO: img:0849x4         ; Scores - psnr: 22.238658; ssim: 0.768040; lpips: 0.278073; Y Scores - psnr: 23.634731; ssim: 0.779598; lpips: 0.000000; 
+23-04-27 01:32:08.754 - INFO: img:0850x4         ; Scores - psnr: 29.120864; ssim: 0.839904; lpips: 0.262635; Y Scores - psnr: 30.503841; ssim: 0.856835; lpips: 0.000000; 
+23-04-27 01:32:11.946 - INFO: img:0851x4         ; Scores - psnr: 28.409548; ssim: 0.873208; lpips: 0.227507; Y Scores - psnr: 29.802984; ssim: 0.894088; lpips: 0.000000; 
+23-04-27 01:32:14.592 - INFO: img:0852x4         ; Scores - psnr: 30.003339; ssim: 0.839924; lpips: 0.265736; Y Scores - psnr: 31.036812; ssim: 0.842985; lpips: 0.000000; 
+23-04-27 01:32:17.000 - INFO: img:0853x4         ; Scores - psnr: 34.167369; ssim: 0.931298; lpips: 0.169517; Y Scores - psnr: 36.057672; ssim: 0.950621; lpips: 0.000000; 
+23-04-27 01:32:19.552 - INFO: img:0854x4         ; Scores - psnr: 24.872543; ssim: 0.737147; lpips: 0.326346; Y Scores - psnr: 26.182479; ssim: 0.756336; lpips: 0.000000; 
+23-04-27 01:32:24.970 - INFO: img:0855x4         ; Scores - psnr: 29.346981; ssim: 0.747811; lpips: 0.512745; Y Scores - psnr: 30.678388; ssim: 0.781377; lpips: 0.000000; 
+23-04-27 01:32:27.265 - INFO: img:0856x4         ; Scores - psnr: 24.333922; ssim: 0.704628; lpips: 0.376415; Y Scores - psnr: 27.471269; ssim: 0.735865; lpips: 0.000000; 
+23-04-27 01:32:31.295 - INFO: img:0857x4         ; Scores - psnr: 34.958621; ssim: 0.792402; lpips: 0.549867; Y Scores - psnr: 36.349307; ssim: 0.832820; lpips: 0.000000; 
+23-04-27 01:32:33.548 - INFO: img:0858x4         ; Scores - psnr: 28.520536; ssim: 0.787981; lpips: 0.339402; Y Scores - psnr: 29.741500; ssim: 0.805606; lpips: 0.000000; 
+23-04-27 01:32:35.829 - INFO: img:0859x4         ; Scores - psnr: 25.319259; ssim: 0.683625; lpips: 0.442181; Y Scores - psnr: 26.599698; ssim: 0.709473; lpips: 0.000000; 
+23-04-27 01:32:38.450 - INFO: img:0860x4         ; Scores - psnr: 20.555277; ssim: 0.626446; lpips: 0.506493; Y Scores - psnr: 21.916316; ssim: 0.639632; lpips: 0.000000; 
+23-04-27 01:32:40.787 - INFO: img:0861x4         ; Scores - psnr: 22.933024; ssim: 0.755391; lpips: 0.281430; Y Scores - psnr: 24.146349; ssim: 0.773004; lpips: 0.000000; 
+23-04-27 01:32:43.068 - INFO: img:0862x4         ; Scores - psnr: 33.158835; ssim: 0.825209; lpips: 0.429941; Y Scores - psnr: 34.518579; ssim: 0.852673; lpips: 0.000000; 
+23-04-27 01:32:47.510 - INFO: img:0863x4         ; Scores - psnr: 33.244031; ssim: 0.898704; lpips: 0.219301; Y Scores - psnr: 34.560085; ssim: 0.912850; lpips: 0.000000; 
+23-04-27 01:32:49.788 - INFO: img:0864x4         ; Scores - psnr: 29.946791; ssim: 0.784391; lpips: 0.360803; Y Scores - psnr: 31.199941; ssim: 0.805764; lpips: 0.000000; 
+23-04-27 01:32:52.438 - INFO: img:0865x4         ; Scores - psnr: 27.270803; ssim: 0.759817; lpips: 0.428446; Y Scores - psnr: 28.631606; ssim: 0.780501; lpips: 0.000000; 
+23-04-27 01:32:54.665 - INFO: img:0866x4         ; Scores - psnr: 25.015502; ssim: 0.800267; lpips: 0.343637; Y Scores - psnr: 26.426938; ssim: 0.813621; lpips: 0.000000; 
+23-04-27 01:32:56.904 - INFO: img:0867x4         ; Scores - psnr: 28.466528; ssim: 0.854990; lpips: 0.214393; Y Scores - psnr: 29.545315; ssim: 0.866937; lpips: 0.000000; 
+23-04-27 01:32:59.156 - INFO: img:0868x4         ; Scores - psnr: 32.801665; ssim: 0.959433; lpips: 0.053590; Y Scores - psnr: 34.057537; ssim: 0.962973; lpips: 0.000000; 
+23-04-27 01:33:01.411 - INFO: img:0869x4         ; Scores - psnr: 23.721604; ssim: 0.794439; lpips: 0.321260; Y Scores - psnr: 25.078768; ssim: 0.805425; lpips: 0.000000; 
+23-04-27 01:33:05.834 - INFO: img:0870x4         ; Scores - psnr: 28.614011; ssim: 0.844023; lpips: 0.292370; Y Scores - psnr: 29.955671; ssim: 0.861310; lpips: 0.000000; 
+23-04-27 01:33:08.110 - INFO: img:0871x4         ; Scores - psnr: 32.177867; ssim: 0.902628; lpips: 0.171201; Y Scores - psnr: 33.723818; ssim: 0.914811; lpips: 0.000000; 
+23-04-27 01:33:10.379 - INFO: img:0872x4         ; Scores - psnr: 24.010389; ssim: 0.690658; lpips: 0.392468; Y Scores - psnr: 25.283781; ssim: 0.717570; lpips: 0.000000; 
+23-04-27 01:33:12.596 - INFO: img:0873x4         ; Scores - psnr: 24.030964; ssim: 0.735153; lpips: 0.316549; Y Scores - psnr: 25.360129; ssim: 0.751761; lpips: 0.000000; 
+23-04-27 01:33:14.892 - INFO: img:0874x4         ; Scores - psnr: 30.093408; ssim: 0.789594; lpips: 0.330773; Y Scores - psnr: 31.487055; ssim: 0.815849; lpips: 0.000000; 
+23-04-27 01:33:17.521 - INFO: img:0875x4         ; Scores - psnr: 24.342585; ssim: 0.666491; lpips: 0.372326; Y Scores - psnr: 25.619828; ssim: 0.690854; lpips: 0.000000; 
+23-04-27 01:33:19.812 - INFO: img:0876x4         ; Scores - psnr: 22.095951; ssim: 0.576728; lpips: 0.503185; Y Scores - psnr: 23.193281; ssim: 0.600822; lpips: 0.000000; 
+23-04-27 01:33:21.712 - INFO: img:0877x4         ; Scores - psnr: 40.443441; ssim: 0.967707; lpips: 0.078083; Y Scores - psnr: 41.938314; ssim: 0.975512; lpips: 0.000000; 
+23-04-27 01:33:26.825 - INFO: img:0878x4         ; Scores - psnr: 32.221001; ssim: 0.897131; lpips: 0.216047; Y Scores - psnr: 33.762908; ssim: 0.910899; lpips: 0.000000; 
+23-04-27 01:33:32.002 - INFO: img:0879x4         ; Scores - psnr: 27.296594; ssim: 0.861274; lpips: 0.224538; Y Scores - psnr: 28.628865; ssim: 0.878709; lpips: 0.000000; 
+23-04-27 01:33:34.242 - INFO: img:0880x4         ; Scores - psnr: 32.083651; ssim: 0.899966; lpips: 0.189235; Y Scores - psnr: 33.437436; ssim: 0.909402; lpips: 0.000000; 
+23-04-27 01:33:37.993 - INFO: img:0881x4         ; Scores - psnr: 25.890672; ssim: 0.774336; lpips: 0.332050; Y Scores - psnr: 27.316338; ssim: 0.791374; lpips: 0.000000; 
+23-04-27 01:33:40.279 - INFO: img:0882x4         ; Scores - psnr: 34.169872; ssim: 0.946462; lpips: 0.121365; Y Scores - psnr: 35.707002; ssim: 0.961005; lpips: 0.000000; 
+23-04-27 01:33:44.043 - INFO: img:0883x4         ; Scores - psnr: 26.409388; ssim: 0.748062; lpips: 0.312267; Y Scores - psnr: 28.255919; ssim: 0.781234; lpips: 0.000000; 
+23-04-27 01:33:46.333 - INFO: img:0884x4         ; Scores - psnr: 25.959765; ssim: 0.744574; lpips: 0.350241; Y Scores - psnr: 27.888610; ssim: 0.776527; lpips: 0.000000; 
+23-04-27 01:33:48.621 - INFO: img:0885x4         ; Scores - psnr: 22.857284; ssim: 0.594399; lpips: 0.496304; Y Scores - psnr: 24.241231; ssim: 0.616934; lpips: 0.000000; 
+23-04-27 01:33:50.878 - INFO: img:0886x4         ; Scores - psnr: 36.555674; ssim: 0.920003; lpips: 0.293829; Y Scores - psnr: 38.427825; ssim: 0.937409; lpips: 0.000000; 
+23-04-27 01:33:53.139 - INFO: img:0887x4         ; Scores - psnr: 25.219278; ssim: 0.766253; lpips: 0.320260; Y Scores - psnr: 26.101771; ssim: 0.763511; lpips: 0.000000; 
+23-04-27 01:33:55.447 - INFO: img:0888x4         ; Scores - psnr: 30.579903; ssim: 0.883452; lpips: 0.189150; Y Scores - psnr: 31.994576; ssim: 0.898359; lpips: 0.000000; 
+23-04-27 01:33:57.746 - INFO: img:0889x4         ; Scores - psnr: 30.870603; ssim: 0.907661; lpips: 0.145785; Y Scores - psnr: 32.473804; ssim: 0.919944; lpips: 0.000000; 
+23-04-27 01:34:00.069 - INFO: img:0890x4         ; Scores - psnr: 25.283865; ssim: 0.740521; lpips: 0.369469; Y Scores - psnr: 26.566038; ssim: 0.750892; lpips: 0.000000; 
+23-04-27 01:34:04.809 - INFO: img:0891x4         ; Scores - psnr: 26.888179; ssim: 0.827516; lpips: 0.198171; Y Scores - psnr: 28.175666; ssim: 0.846224; lpips: 0.000000; 
+23-04-27 01:34:06.905 - INFO: img:0892x4         ; Scores - psnr: 30.132704; ssim: 0.913371; lpips: 0.112104; Y Scores - psnr: 31.448518; ssim: 0.921953; lpips: 0.000000; 
+23-04-27 01:34:09.156 - INFO: img:0893x4         ; Scores - psnr: 33.319381; ssim: 0.815881; lpips: 0.451013; Y Scores - psnr: 34.794257; ssim: 0.850718; lpips: 0.000000; 
+23-04-27 01:34:11.392 - INFO: img:0894x4         ; Scores - psnr: 31.830272; ssim: 0.891570; lpips: 0.211061; Y Scores - psnr: 33.160791; ssim: 0.903902; lpips: 0.000000; 
+23-04-27 01:34:13.482 - INFO: img:0895x4         ; Scores - psnr: 20.389856; ssim: 0.568915; lpips: 0.557042; Y Scores - psnr: 21.707153; ssim: 0.587399; lpips: 0.000000; 
+23-04-27 01:34:15.771 - INFO: img:0896x4         ; Scores - psnr: 39.167827; ssim: 0.942438; lpips: 0.160545; Y Scores - psnr: 40.795377; ssim: 0.958573; lpips: 0.000000; 
+23-04-27 01:34:18.067 - INFO: img:0897x4         ; Scores - psnr: 22.084883; ssim: 0.689805; lpips: 0.423976; Y Scores - psnr: 23.228465; ssim: 0.723243; lpips: 0.000000; 
+23-04-27 01:34:20.315 - INFO: img:0898x4         ; Scores - psnr: 34.515856; ssim: 0.909002; lpips: 0.260337; Y Scores - psnr: 35.971732; ssim: 0.929839; lpips: 0.000000; 
+23-04-27 01:34:22.586 - INFO: img:0899x4         ; Scores - psnr: 31.271516; ssim: 0.902468; lpips: 0.109818; Y Scores - psnr: 32.522496; ssim: 0.916711; lpips: 0.000000; 
+23-04-27 01:34:24.477 - INFO: img:0900x4         ; Scores - psnr: 27.935419; ssim: 0.859455; lpips: 0.176307; Y Scores - psnr: 29.102220; ssim: 0.876528; lpips: 0.000000; 
+23-04-27 01:34:24.484 - INFO: Average Results for DIV2K_bic_mini
+psnr: 28.911074; ssim: 0.817012; lpips: 0.283463; 
+23-04-27 01:34:24.490 - INFO: Average Results on Y channel for DIV2K_bic_mini
+psnr: 30.346256; ssim: 0.835113; lpips: 0.000000; 

@@ -18,7 +18,7 @@
       dataroot_tgt: ../../datasets/SRDatasets/DIV2K_train/HR.lmdb
 
       use_shuffle: true
-      workers_per_gpu: 8  # per GPU
+      workers_per_gpu: 0  # per GPU
       imgs_per_gpu: 32
       tgt_size: 128
       src_size: 32

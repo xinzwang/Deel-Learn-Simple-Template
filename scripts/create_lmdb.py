@@ -16,8 +16,8 @@ sys.path.append("../")
 # img_folder = "/home/lzx/SRDatasets/DIV2K_train/HR/x4/*"
 # lmdb_save_path = "/home/lzx/SRDatasets/DIV2K_train/HR/x4_new.lmdb"
 # img_folder = 'F:/wangxinzhe/codes/datasets/DIV2K/DIV2K_valid_LR_unknown/X4_mini/*'
-img_folder = "../../../datasets/DIV2K/DIV2K_valid_LR_bicubic/X4_mini/*"
-lmdb_save_path = '../../../datasets/SRDatasets/DIV2K_valid/BicLR/x4_mini.lmdb'
+img_folder = "../../../datasets/DIV2K/DIV2K_valid_HR/*"
+lmdb_save_path = '../../../datasets/SRDatasets/DIV2K_valid/HR.lmdb'
 
 meta_info = {"name": "x4"}
 
