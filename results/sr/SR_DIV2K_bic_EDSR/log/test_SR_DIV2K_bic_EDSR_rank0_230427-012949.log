@@ -75,8 +75,8 @@
   ]
   dist: False
 
-23-04-27 01:29:50.004 - INFO: Dataset [PairedDataset - DIV2K_bic_mini] is created.
-23-04-27 01:29:50.005 - INFO: Number of test images in [DIV2K_bic_mini]: 100
+23-04-27 01:29:50.004 - INFO: Dataset [PairedDataset - DIV2K_bic] is created.
+23-04-27 01:29:50.005 - INFO: Number of test images in [DIV2K_bic]: 100
 23-04-27 01:29:50.022 - INFO: Network G structure: DataParallel - EDSR, with parameters: 1,517,595
 23-04-27 01:29:50.022 - INFO: EDSR(
   (sub_mean): MeanShift(3, 3, kernel_size=(1, 1), stride=(1, 1))
@@ -211,7 +211,7 @@
 )
 23-04-27 01:29:50.022 - INFO: Model [SRModel] is created.
 23-04-27 01:29:50.022 - INFO: 
-Testing [DIV2K_bic_mini]...
+Testing [DIV2K_bic]...
 23-04-27 01:29:54.659 - INFO: img:0801x4         ; Scores - psnr: 29.380593; ssim: 0.846504; lpips: 0.280020; Y Scores - psnr: 30.645460; ssim: 0.857694; lpips: 0.000000; 
 23-04-27 01:29:56.952 - INFO: img:0802x4         ; Scores - psnr: 35.258215; ssim: 0.900578; lpips: 0.125217; Y Scores - psnr: 37.278704; ssim: 0.919621; lpips: 0.000000; 
 23-04-27 01:30:01.496 - INFO: img:0803x4         ; Scores - psnr: 40.522850; ssim: 0.970159; lpips: 0.074178; Y Scores - psnr: 42.418923; ssim: 0.979203; lpips: 0.000000; 
@@ -312,7 +312,7 @@ Testing [DIV2K_bic_mini]...
 23-04-27 01:34:20.315 - INFO: img:0898x4         ; Scores - psnr: 34.515856; ssim: 0.909002; lpips: 0.260337; Y Scores - psnr: 35.971732; ssim: 0.929839; lpips: 0.000000; 
 23-04-27 01:34:22.586 - INFO: img:0899x4         ; Scores - psnr: 31.271516; ssim: 0.902468; lpips: 0.109818; Y Scores - psnr: 32.522496; ssim: 0.916711; lpips: 0.000000; 
 23-04-27 01:34:24.477 - INFO: img:0900x4         ; Scores - psnr: 27.935419; ssim: 0.859455; lpips: 0.176307; Y Scores - psnr: 29.102220; ssim: 0.876528; lpips: 0.000000; 
-23-04-27 01:34:24.484 - INFO: Average Results for DIV2K_bic_mini
+23-04-27 01:34:24.484 - INFO: Average Results for DIV2K_bic
 psnr: 28.911074; ssim: 0.817012; lpips: 0.283463; 
-23-04-27 01:34:24.490 - INFO: Average Results on Y channel for DIV2K_bic_mini
+23-04-27 01:34:24.490 - INFO: Average Results on Y channel for DIV2K_bic
 psnr: 30.346256; ssim: 0.835113; lpips: 0.000000; 
